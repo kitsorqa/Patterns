@@ -1,7 +1,6 @@
-import time
+import allure
 
 from base.base_page import BasePage
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class HomePage(BasePage):
@@ -11,8 +10,10 @@ class HomePage(BasePage):
     _LAST_POST = ("xpath", "//div[contains(@class, 'ossn-wall-item')]")
 
     def create_post(self, text):
-        self.enter_text(self._POST_TEXT, text)
-        self.click_element(self._CREATE_POST)
+        with allure.step(f"Ввод {text} и создание тестового поста"):
+            self.enter_text(self._POST_TEXT, text)
+            self.click_element(self._CREATE_POST)
 
+    @allure.step("Проверка, что пост отображается на странице")
     def is_post_published(self):
         return self.element(self._LAST_POST).is_displayed()

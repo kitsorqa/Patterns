@@ -1,4 +1,4 @@
-import logging
+import allure
 
 from base.base_page import BasePage
 
@@ -11,12 +11,15 @@ class LoginPage(BasePage):
     _RESET_PASSWORD = ("xpath", "//a[text()='Reset Password ']")
 
     def enter_login(self, login):
-        self.driver.find_element(*self._USERNAME_FIELD).clear()
-        self.enter_text(self._USERNAME_FIELD, login)
+        with allure.step(f"Ввод логина: {login}"):
+            self.driver.find_element(*self._USERNAME_FIELD).clear()
+            self.enter_text(self._USERNAME_FIELD, login)
 
     def enter_password(self, password):
-        self.driver.find_element(*self._PASSWORD_FIELD).clear()
-        self.enter_text(self._PASSWORD_FIELD, password)
+        with allure.step(f"Ввод пароля: {password}"):
+            self.driver.find_element(*self._PASSWORD_FIELD).clear()
+            self.enter_text(self._PASSWORD_FIELD, password)
 
+    @allure.step("Клик на кнопку логина")
     def click_login_button(self):
         self.click_element(self._LOGIN_BUTTON)
